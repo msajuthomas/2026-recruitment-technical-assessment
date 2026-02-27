@@ -36,16 +36,25 @@ app.post("/parse", (req:Request, res:Response) => {
   if (parsed_string == null) {
     res.status(400).send("this string is cooked");
     return;
-  } 
+  }
   res.json({ msg: parsed_string });
   return;
-  
+
 });
 
 // [TASK 1] ====================================================================
-// Takes in a recipeName and returns it in a form that 
+// Takes in a recipeName and returns it in a form that
 const parse_handwriting = (recipeName: string): string | null => {
-  // TODO: implement me
+  recipeName = recipeName.replace(/[-_ ]+/g,' ').toLowerCase();
+  // remove extra whitespace, -,_ and turn everything lowercase
+  recipeName = recipeName.replace(/[^a-z A-Z]+/g,'');
+  // removes non-letter characters
+  recipeName = recipeName.replace(/\b\w/g, letter => letter.toUpperCase());
+  // replaces the first letter of every word with a capital
+  recipeName.trim();
+  if (recipeName.length <= 0) {
+    return null;
+  }
   return recipeName
 }
 
